@@ -118,6 +118,12 @@ function radians_clothes_scripts() {
 	wp_enqueue_script( 'radians_clothes-owl.carousel.min', get_template_directory_uri() . '/js/owl.carousel.min.js', array(),'', true );
 	wp_enqueue_script( 'radians_clothes-script', get_template_directory_uri() . '/js/script.js', array(),'', true );
 
+	wp_localize_script( 'radians_clothes-script', 'myajax',
+		array(
+			'url' => admin_url( 'admin-ajax.php' )
+		)
+	);
+
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
@@ -129,3 +135,22 @@ add_action( 'wp_enqueue_scripts', 'radians_clothes_scripts' );
  */
 require get_template_directory() . '/inc/jetpack.php';
 require get_template_directory() . '/inc/bootstrap_menu.php';
+
+// AJAX ACTION
+add_action( 'wp_ajax_email', 'sendEmail' );
+add_action( 'wp_ajax_nopriv_email', 'sendEmail' );
+
+function sendEmail() {
+	if ( $_POST ) {
+
+		$adminMail = get_option( 'admin_email' );
+
+		$str = "С вашего сайта оставили заявку:<br>";
+		$str .= 'Имя: ' . $_POST["name"] . ' <br>';
+		$str .= 'Email: ' . $_POST["email"] . ' <br>';
+		$str .= 'Сообщение: ' . $_POST["mess"] . ' <br>';
+
+		wp_mail( $adminMail, "Письмо с сайта", $str, "Content-type: text/html; charset=UTF-8\r\n" );
+	}
+	wp_die();
+}

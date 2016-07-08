@@ -67,4 +67,22 @@ $(document).ready(function () {
     });*/
 
     /*close tabs function*/
+    $(document).on('click','.js-send-form', function(){
+        var name = $('.js-form-name').val();
+        var email = $('.js-form-email').val();
+        var mess = $('.js-form-mess').val();
+
+        $.ajax({
+            url: myajax.url, //url, к которому обращаемся
+            type: "POST",
+            data: "action=email&name=" + name + "&email=" + email + "&mess=" + mess,
+            success: function (data) {
+                alert('Письмо успешно отправлено');
+                $('.js-form-name').val('');
+                $('.js-form-email').val('');
+                $('.js-form-mess').val('');
+
+            }
+        });
+    });
 });

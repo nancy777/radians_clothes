@@ -11,14 +11,22 @@
 
 ?>
 <footer class="footer">
-	<div class="container">
-		<div class="footer__section">
-			<a href="#" class="footer__title">HOME</a>
-		</div>
-		<div class="footer__section">
-			<a href="#" class="footer__title">CATALOG</a>
-			<nav>
-				<ul class="footer__sizemap footer__sizemap--three">
+	<?php wp_nav_menu( array(
+		'theme_location'  => 'footer',
+		'container'       => 'div',
+		'container_class'      => 'container',
+		'menu_class' => 'footer__nav',
+	) ); ?>
+
+<!--	<div class="container">
+
+		<ul class="footer__nav">
+			<li>
+				<a href="#">HOME</a>
+			</li>
+			<li>
+				<a href="#">CATALOG</a>
+				<ul class="sub-menu">
 					<li><a href="#">Catalog Item 1</a></li>
 					<li><a href="#">Catalog Item 1</a></li>
 					<li><a href="#">Catalog Item 1</a></li>
@@ -32,36 +40,32 @@
 					<li><a href="#">Catalog Item 1</a></li>
 					<li><a href="#">Catalog Item 1</a></li>
 				</ul>
-			</nav>
-		</div>
-		<div class="footer__section">
-			<a href="#" class="footer__title">PROMOTION</a>
-			<nav>
-				<ul class="footer__sizemap footer__sizemap--two">
+			</li>
+			<li>
+				<a href="#">PROMOTION</a>
+				<ul class="sub-menu">
 					<li><a href="#">Promotion Item 1</a></li>
 					<li><a href="#">Promotion Item 1</a></li>
 					<li><a href="#">Promotion Item 1</a></li>
 					<li><a href="#">Promotion Item 1</a></li>
 				</ul>
-			</nav>
-		</div>
-		<div class="footer__section">
-			<a href="#" class="footer__title">FOR BUYERS</a>
-			<nav>
-				<ul class="footer__sizemap footer__sizemap--two">
-					<li><a href="#">For buyers Item 1</a></li>
-					<li><a href="#">For buyers Item 1</a></li>
+			</li>
+			<li>
+				<a href="#">FOR BUYERS</a>
+				<ul class="sub-menu">
 					<li><a href="#">For buyers Item 1</a></li>
 					<li><a href="#">For buyers Item 1</a></li>
 					<li><a href="#">For buyers Item 1</a></li>
 					<li><a href="#">For buyers Item 1</a></li>
 				</ul>
-			</nav>
-		</div>
-		<div class="footer__section">
-			<a href="contacts.html" target="_blank" class="footer__title">CONTACTS</a>
-		</div>
-	</div>
+			</li>
+			<li>
+				<a href="#">CONTACTS</a>
+			</li>
+		</ul>
+
+	</div>-->
+
 
 	<div class="footer__links">
 		<a href="#" class="footer__logo">
