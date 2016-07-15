@@ -14,35 +14,43 @@ get_header(); ?>
 
 		<?php
 		if ( have_posts() ) : ?>
-
-			<header class="page-header">
-				<h1 class="page-title"><?php printf( esc_html__( 'Search Results for: %s', 'radians_clothes' ), '<span>' . get_search_query() . '</span>' ); ?></h1>
-			</header><!-- .page-header -->
-
+			<section class="search-block">
+				<div class="container">
+					<div class="search-block__result">
+						<h1>RESULTS OF SEARCH:</h1>
+						<div class="search-block__result--name">You search: <span class="js-result-name"><?php printf( get_search_query() ); ?></span></div>
+						<div class="search-block__result--count">Results: <span class="js-result-count">
+								<?php global $wp_query;
+								echo $wp_query->found_posts; ?></span></div>
+					</div>
+					<form action="" class="search-block__form">
+						<input type="search" placeholder="New search">
+						<span><i class="fa fa-search" aria-hidden="true"></i></span>
+					</form>
+				</div>
+			</section>
+			<section class="search-content">
+				<div class="separator"></div>
+				<div class="container">
+					<div class="search-content__box" id="search-box">
+						<ol>
 			<?php
 			/* Start the Loop */
 			while ( have_posts() ) : the_post();
 
-				/**
-				 * Run the loop for the search to output the results.
-				 * If you want to overload this in a child theme then include a file
-				 * called content-search.php and that will be used instead.
-				 */
 				get_template_part( 'template-parts/content', 'search' );
 
 			endwhile;
-
-			the_posts_navigation();
-
-		else :
-
-			get_template_part( 'template-parts/content', 'none' );
-
 		endif; ?>
-
-		</main><!-- #main -->
-	</section><!-- #primary -->
-
+						</ol>
+					</div>
+					<?php pagination(); ?>
+				</div>
+			</section>
+	<section class="search-top">
+		<div class="container">
+			<a href="#" class='Go_Top'><img alt="up" src="<?php bloginfo('template_directory'); ?>/img/top.png"></a>
+		</div>
+	</section>
 <?php
-get_sidebar();
 get_footer();

@@ -9,7 +9,13 @@ class bootstrap_menu extends Walker_Nav_Menu { // внутри вывод
      */
     public function start_lvl( &$output, $depth = 0, $args = array() ) {
         $indent = str_repeat( "\t", $depth );
-        $output .= "\n$indent<ul role=\"menu\" class=\" dropdown-menu\">\n";
+        if($depth === 1){
+            $output .= "\n$indent<ul role=\"menu\" class=\" hover-menu\">\n";
+
+        }else{
+            $output .= "\n$indent<ul role=\"menu\" class=\" dropdown-menu\">\n";
+
+        }
     }
     /**
      * @see Walker::start_el()
@@ -50,6 +56,9 @@ class bootstrap_menu extends Walker_Nav_Menu { // внутри вывод
             if ( !$args->has_children && $depth === 0)
                 $class_names .= ' top';
 
+            if ( $args->has_children && $depth === 1)
+                $class_names .= ' hover';
+
             if ( in_array( 'current-menu-item', $classes ) )
                 $class_names .= ' ';
             $class_names = $class_names ? ' class=" ' . esc_attr( $class_names ) . '"' : '';
@@ -66,7 +75,9 @@ class bootstrap_menu extends Walker_Nav_Menu { // внутри вывод
                 $atts['data-toggle']	= 'dropdown';
                 $atts['class']			= 'dropdown-toggle';
                 $atts['aria-haspopup']	= 'true';
-            } else {
+            } elseif($args->has_children && $depth === 1){
+                $atts['class']			= 'hover-show';
+            }else {
                 $atts['href'] = ! empty( $item->url ) ? $item->url : '';
             }
             $atts = apply_filters( 'nav_menu_link_attributes', $atts, $item, $args );
@@ -91,6 +102,7 @@ class bootstrap_menu extends Walker_Nav_Menu { // внутри вывод
                 $item_output .= '<a'. $attributes .'>';
             $item_output .= $args->link_before . apply_filters( 'the_title', $item->title, $item->ID ) . $args->link_after;
             $item_output .= ( $args->has_children && 0 === $depth ) ? '</a>' : '</a>';
+            $item_output .= ( $args->has_children && 1 === $depth ) ? ' <span class="chevron"></span></a>' : '</a>';
             $item_output .= $args->after;
             $output .= apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );
         }

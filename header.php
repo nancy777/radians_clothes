@@ -33,8 +33,8 @@
 				<a href="#">fr</a>
 				<a href="#">ru</a>
 			</div>
-			<form class="header__search" action="">
-				<input class="search-field" type="search" placeholder="looking for...">
+			<form role="search" method="post" class="search search-form header__search" action="<?php echo home_url( '/' ); ?>">
+				<input class="search-field" type="search" placeholder="looking for..." name="s">
 			</form>
 		</div>
 		<div class="header__logo">

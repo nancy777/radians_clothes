@@ -116,7 +116,7 @@ function radians_clothes_scripts() {
 	wp_enqueue_script( 'radians_clothes-bootstrap', get_template_directory_uri() . '/js/bootstrap.min.js', array(),'', true );
 	//wp_enqueue_script( 'radians_clothes-customizer', get_template_directory_uri() . '/js/customizer.js',  array(),'',true );
 	wp_enqueue_script( 'radians_clothes-owl.carousel.min', get_template_directory_uri() . '/js/owl.carousel.min.js', array(),'', true );
-	wp_enqueue_script( 'radians_clothes-script', get_template_directory_uri() . '/js/script.js', array(),'', true );
+	wp_enqueue_script( 'radians_clothes-script', get_template_directory_uri() . '/js/script.min.js', array(),'', true );
 
 	wp_localize_script( 'radians_clothes-script', 'myajax',
 		array(
@@ -153,4 +153,35 @@ function sendEmail() {
 		wp_mail( $adminMail, "Письмо с сайта", $str, "Content-type: text/html; charset=UTF-8\r\n" );
 	}
 	wp_die();
+}
+
+function pagination() { // функция вывода пагинации
+	global $wp_query; // текущая выборка должна быть глобальной
+	$big = 999999999; // число для замены
+	$links = paginate_links(array( // вывод пагинации с опциями ниже
+		'base' => str_replace($big,'%#%',esc_url(get_pagenum_link($big))), // что заменяем в формате ниже
+		'format' => '?paged=%#%', // формат, %#% будет заменено
+		'current' => max(1, get_query_var('paged')), // текущая страница, 1, если $_GET['page'] не определено
+		'type' => 'array', // нам надо получить массив
+		'prev_text' => '', // текст назад
+		'next_text' => '', // текст вперед
+		'total' => $wp_query->max_num_pages, // общие кол-во страниц в пагинации
+		'show_all' => false, // не показывать ссылки на все страницы, иначе end_size и mid_size будут проигнорированны
+		'end_size' => 15, // сколько страниц показать в начале и конце списка (12 ... 4 ... 89)
+		'mid_size' => 15, // сколько страниц показать вокруг текущей страницы (... 123 5 678 ...).
+		'add_args' => false, // массив GET параметров для добавления в ссылку страницы
+		'add_fragment' => '', // строка для добавления в конец ссылки на страницу
+		'before_page_number' => '', // строка перед цифрой
+		'after_page_number' => '' // строка после цифры
+	));
+	if( is_array( $links ) ) { // если пагинация есть
+
+				echo '<div class="search-content__pagination">';
+		foreach ( $links as $link ) {
+			if ( strpos( $link, 'current' ) !== false ) echo $link; // если это активная страница
+			else echo $link;
+		}
+		echo '</div>';
+	}
+
 }
